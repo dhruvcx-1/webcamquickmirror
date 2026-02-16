@@ -1,0 +1,54 @@
+{
+  "name": "quick-mirror",
+  "version": "1.0.0",
+  "description": "Quick Mirror - System tray webcam mirror for Windows (Hand Mirror style)",
+  "main": "main.js",
+  "author": "Quick Mirror",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:portable": "electron-builder --win portable",
+    "build:installer": "electron-builder --win nsis"
+  },
+  "dependencies": {
+    "electron-store": "^8.1.0"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "com.quickmirror.app",
+    "productName": "Quick Mirror",
+    "directories": { "output": "dist" },
+    "files": [
+      "main.js",
+      "preload.js",
+      "store.js",
+      "renderer.js",
+      "fullscreen-renderer.js",
+      "cameraManager.js",
+      "settingsManager.js",
+      "index.html",
+      "fullscreen.html",
+      "fullscreen.css",
+      "settings.html",
+      "settings.js",
+      "settings.css",
+      "styles.css",
+      "assets/**/*"
+    ],
+    "win": {
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

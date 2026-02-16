@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; media-src 'self' blob:; script-src 'self'; style-src 'self' 'unsafe-inline'">
+  <title>Quick Mirror Settings</title>
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <div class="settings-root">
+    <!-- 1. Live Preview -->
+    <section class="card preview-section">
+      <h2 class="section-title">Preview</h2>
+      <div class="preview-wrap">
+        <video id="preview-video" class="preview-video" autoplay playsinline muted></video>
+      </div>
+    </section>
+
+    <!-- 2. Camera -->
+    <section class="card">
+      <h2 class="section-title">Camera</h2>
+      <label class="label">Device</label>
+      <select id="camera-select" class="select"></select>
+    </section>
+
+    <!-- 3. Quality -->
+    <section class="card">
+      <h2 class="section-title">Quality</h2>
+      <label class="label">Resolution</label>
+      <select id="resolution-select" class="select">
+        <option value="low">Low (640×480)</option>
+        <option value="medium">Medium (1280×720)</option>
+        <option value="high">High (1920×1080)</option>
+        <option value="ultra">Ultra (3840×2160)</option>
+      </select>
+      <label class="label">Frame rate</label>
+      <select id="fps-select" class="select">
+        <option value="30">30 FPS</option>
+        <option value="60">60 FPS</option>
+      </select>
+    </section>
+
+    <!-- 4. Mirror -->
+    <section class="card">
+      <h2 class="section-title">Behavior</h2>
+      <div class="row toggle-row">
+        <span class="label">Mirror video</span>
+        <label class="toggle">
+          <input type="checkbox" id="mirror-toggle" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="row toggle-row">
+        <span class="label">Always on top</span>
+        <label class="toggle">
+          <input type="checkbox" id="always-on-top-toggle" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- 5. Startup -->
+    <section class="card">
+      <h2 class="section-title">Startup</h2>
+      <div class="row toggle-row">
+        <span class="label">Launch at startup</span>
+        <label class="toggle">
+          <input type="checkbox" id="launch-at-startup-toggle">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="row toggle-row">
+        <span class="label">Start minimized to tray</span>
+        <label class="toggle">
+          <input type="checkbox" id="start-minimized-toggle">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- 6. Popup size -->
+    <section class="card">
+      <h2 class="section-title">Popup</h2>
+      <label class="label">Popup size</label>
+      <select id="popup-size-select" class="select">
+        <option value="small">Small</option>
+        <option value="medium">Medium</option>
+        <option value="large">Large</option>
+      </select>
+    </section>
+
+    <!-- 7. Hotkey -->
+    <section class="card advanced-section">
+      <h2 class="section-title">Advanced</h2>
+      <label class="label">Global hotkey (open mirror)</label>
+      <input type="text" id="hotkey-input" class="hotkey-input" readonly placeholder="Ctrl+Shift+M">
+    </section>
+  </div>
+  <script src="cameraManager.js"></script>
+  <script src="settingsManager.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>
