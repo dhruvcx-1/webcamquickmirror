@@ -1,6 +1,6 @@
 {
   "name": "quick-mirror",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Quick Mirror - System tray webcam mirror for Windows (Hand Mirror style)",
   "main": "main.js",
   "author": "Quick Mirror",
