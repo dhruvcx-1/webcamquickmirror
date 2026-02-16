@@ -5,6 +5,9 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  contents: write
+
 jobs:
   release:
     runs-on: windows-latest
@@ -21,15 +24,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build
+      - name: Build (no publish)
+        run: npx electron-builder --win --publish never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Get version from tag
-        id: version
-        run: echo "VERSION=${env:GITHUB_REF_NAME#v}" >> $env:GITHUB_OUTPUT
-        shell: pwsh
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
