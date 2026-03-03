@@ -103,6 +103,30 @@ Only one instance runs. Running `Quick Mirror.exe --fullscreen` again while the 
 
 ---
 
+## Releases
+
+**Download the latest release (installer or portable):**  
+**[Releases](https://github.com/dhruvcx-1/webcamquickmirror/releases)**
+
+Each release includes:
+- **Quick Mirror Setup x.x.x.exe** — Installer (recommended)
+- **Quick Mirror x.x.x.exe** — Portable, no install
+
+### Creating a new release
+
+1. Update the version in **`package.json`** (e.g. `"version": "1.0.1"`).
+2. Commit, then create and push a tag matching the version:
+   ```bash
+   git add package.json
+   git commit -m "Bump version to 1.0.1"
+   git tag v1.0.1
+   git push origin main
+   git push origin v1.0.1
+   ```
+3. GitHub Actions will build the app on Windows and create a release with the `.exe` files attached. Check the **Actions** tab, then the **Releases** page once the workflow finishes.
+
+---
+
 ## License
 
 MIT
