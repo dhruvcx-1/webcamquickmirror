@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+  <title>About Quick Mirror</title>
+  <link rel="stylesheet" href="about.css">
+</head>
+<body>
+  <div class="about-container">
+    <div class="app-icon">
+      <img id="app-icon-img" src="" alt="Quick Mirror">
+    </div>
+    
+    <h1 class="app-name">Quick Mirror</h1>
+    <p class="app-version" id="app-version">v1.0.0</p>
+    
+    <p class="app-description">
+      System tray webcam mirror for Windows.<br>
+      Hand Mirror style utility.
+    </p>
+    
+    <div class="info-row">
+      <span class="info-label">Windows:</span>
+      <span class="info-value" id="windows-version">Windows 11</span>
+    </div>
+    
+    <div class="info-row">
+      <span class="info-label">Built with:</span>
+      <span class="info-value">Electron</span>
+    </div>
+    
+    <div class="divider"></div>
+    
+    <button class="check-updates-btn" id="check-updates-btn">
+      Check for Updates
+    </button>
+    
+    <p class="copyright">
+      © 2024 Dhruv Chaturvedi<br>
+      MIT License
+    </p>
+  </div>
+  
+  <script src="about.js"></script>
+</body>
+</html>

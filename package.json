@@ -1,10 +1,14 @@
 {
   "name": "quick-mirror",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Quick Mirror - System tray webcam mirror for Windows (Hand Mirror style)",
   "main": "main.js",
-  "author": "Quick Mirror",
+  "author": "Dhruv Chaturvedi",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dhruvcx-1/webcamquickmirror.git"
+  },
   "scripts": {
     "start": "electron .",
     "build": "electron-builder",
@@ -12,7 +16,9 @@
     "build:installer": "electron-builder --win nsis"
   },
   "dependencies": {
-    "electron-store": "^8.1.0"
+    "electron-log": "^5.1.1",
+    "electron-store": "^8.1.0",
+    "electron-updater": "^6.1.7"
   },
   "devDependencies": {
     "electron": "^28.0.0",
@@ -21,11 +27,17 @@
   "build": {
     "appId": "com.quickmirror.app",
     "productName": "Quick Mirror",
-    "directories": { "output": "dist" },
+    "directories": {
+      "output": "dist"
+    },
     "files": [
       "main.js",
       "preload.js",
       "store.js",
+      "logger.js",
+      "windowFactory.js",
+      "autoUpdater.js",
+      "toast.js",
       "renderer.js",
       "fullscreen-renderer.js",
       "cameraManager.js",
@@ -36,19 +48,49 @@
       "settings.html",
       "settings.js",
       "settings.css",
+      "about.html",
+      "about.js",
+      "about.css",
       "styles.css",
       "assets/**/*"
     ],
+    "extraResources": [
+      {
+        "from": "assets",
+        "to": "assets"
+      }
+    ],
     "win": {
       "target": [
-        { "target": "nsis", "arch": ["x64"] },
-        { "target": "portable", "arch": ["x64"] }
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
       ],
-      "icon": "assets/icon.ico"
+      "icon": "assets/tray-icon.png",
+      "artifactName": "${productName} ${version}.${ext}"
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Quick Mirror",
+      "runAfterFinish": false,
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "license": null,
+      "differentialPackage": true,
+      "include": "installer.nsh"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "dhruvcx-1",
+      "repo": "webcamquickmirror"
     }
   }
 }

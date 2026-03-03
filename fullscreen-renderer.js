@@ -1,6 +1,7 @@
 /**
  * Quick Mirror - Fullscreen window renderer
  * Uses settings (camera, resolution, fps, mirror). ESC closes; settings button opens Settings.
+ * Includes smart camera auto-switch and toast notifications.
  */
 
 (function () {
@@ -9,6 +10,7 @@
   if (!video) return;
 
   let currentStream = null;
+  let currentSettings = {};
 
   function stopStream() {
     if (currentStream) {
@@ -20,6 +22,8 @@
 
   async function applySettings(settings) {
     stopStream();
+    currentSettings = settings;
+    
     if (!window.CameraManager) {
       const constraints = {
         video: settings.cameraId
@@ -36,11 +40,21 @@
       video.classList.toggle('mirror-on', settings.mirror !== false);
       return;
     }
+    
     const streamSettings = {
       cameraId: settings.cameraId || undefined,
       resolution: settings.resolution,
       fps: settings.fps,
     };
+    
+    CameraManager.setCurrentSettings(streamSettings);
+    
+    CameraManager.onCameraSwitch((newCameraName) => {
+      if (window.Toast) {
+        window.Toast.showCameraSwitched(newCameraName);
+      }
+    });
+    
     try {
       currentStream = await window.CameraManager.getStream(streamSettings);
       video.srcObject = currentStream;
