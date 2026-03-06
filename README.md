@@ -145,3 +145,7 @@ Each release includes:
 <img src="previews/hotkey-setting-preview.png" width="200" /> <img src="previews/context-menu-preview.png" width="200" />
 
 ---
+## About
+
+This is a personal side project built with Cursor and some of my own intelligence lol for my own use. I'm not a professional developer, so please excuse any bugs or rough edges. Feel free to report issues or suggest improvements!
+
