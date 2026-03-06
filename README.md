@@ -4,6 +4,9 @@
 
 Runs in the tray only (no taskbar icon). Left-click for a small mirror popup; right-click for fullscreen, settings, or exit.
 
+### Tray Popup
+<img src="previews/tray-preview.png" width="400" />
+
 ---
 
 ## Features
@@ -14,23 +17,6 @@ Runs in the tray only (no taskbar icon). Left-click for a small mirror popup; ri
 - **Settings** — Camera, resolution, FPS, mirror on/off, popup size, always on top, launch at startup, global hotkey (default **Ctrl+Shift+M**)
 - **Single instance** — One process; `QuickMirror.exe --fullscreen` opens fullscreen in the running app
 - **Persistent settings** — Stored locally and applied immediately
-
----
-
-## Previews
-
-### Tray Popup
-![Tray Popup](previews/tray-preview.png)
-
-### Settings Page
-![Settings Page](previews/settings-page-1.png)
-![Settings Page](previews/settings-page-2.png)
-
-### Context Menu
-![Context Menu](previews/context-menu-preview.png)
-
-### Hotkey Setting
-![Hotkey Setting](previews/hotkey-setting-preview.png)
 
 ---
 
@@ -144,6 +130,19 @@ Each release includes:
 
 ---
 
-## License
+## Previews
 
-MIT
+### Tray Popup
+<img src="previews/tray-preview.png" width="400" />
+
+---
+
+### Settings Page
+<img src="previews/settings-page-1.png" width="200" /> <img src="previews/settings-page-2.png" width="200" />
+
+---
+
+### Context Menu & Hotkey Setting
+<img src="previews/hotkey-setting-preview.png" width="200" /> <img src="previews/context-menu-preview.png" width="200" />
+
+---
