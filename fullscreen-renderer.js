@@ -12,6 +12,12 @@
   let currentStream = null;
   let currentSettings = {};
 
+  function applyPreviewMode(settings) {
+    const mode = settings && settings.previewMode === 'fit' ? 'fit' : 'fill';
+    video.style.objectFit = mode === 'fit' ? 'contain' : 'cover';
+    video.style.objectPosition = 'center center';
+  }
+
   function stopStream() {
     if (currentStream) {
       currentStream.getTracks().forEach((t) => t.stop());
@@ -38,6 +44,7 @@
         console.error('Quick Mirror: getUserMedia failed', e);
       }
       video.classList.toggle('mirror-on', settings.mirror !== false);
+      applyPreviewMode(settings);
       return;
     }
     
@@ -62,6 +69,7 @@
       console.error('Quick Mirror: getUserMedia failed', e);
     }
     video.classList.toggle('mirror-on', settings.mirror !== false);
+    applyPreviewMode(settings);
   }
 
   function onKeyDown(e) {

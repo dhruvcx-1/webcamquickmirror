@@ -8,16 +8,23 @@ const path = require('path');
 const { getSettings, setSettings } = require('./store.js');
 const { initLogger, log, openLogsFolder } = require('./logger.js');
 const { createPopupWindow: createPopupWindowConfig, createSettingsWindow, createAboutWindow, createFullscreenWindow, isWindows11 } = require('./windowFactory.js');
-const { initAutoUpdater, checkForUpdates, installUpdate, setMainWindow } = require('./autoUpdater.js');
+const { initAutoUpdater, checkForUpdates, downloadUpdate, installUpdate, setMainWindow, hasUpdateConfigFile } = require('./autoUpdater.js');
 
 const STARTUP_START = performance.now();
 
 const POPUP_MARGIN = 8;
 
 const POPUP_SIZES = {
-  small: { width: 280, height: 210 },
-  medium: { width: 320, height: 240 },
-  large: { width: 400, height: 300 },
+  '4:3': {
+    small: { width: 280, height: 210 },
+    medium: { width: 320, height: 240 },
+    large: { width: 400, height: 300 },
+  },
+  '16:9': {
+    small: { width: 280, height: 158 },
+    medium: { width: 320, height: 180 },
+    large: { width: 400, height: 225 },
+  },
 };
 
 let tray = null;
@@ -27,10 +34,34 @@ let settingsWindow = null;
 let aboutWindow = null;
 let isQuitting = false;
 let startupComplete = false;
+let lastPopupAspectRatio = null;
 
-function getPopupDimensions() {
+function inferAspectFromResolution(resolution) {
+  if (resolution === 'low') return '4:3';
+  return '16:9';
+}
+
+function getAspectPreset(aspectRatio, settings) {
+  if (Number.isFinite(aspectRatio) && aspectRatio > 0) {
+    return aspectRatio >= 1.55 ? '16:9' : '4:3';
+  }
+  return inferAspectFromResolution(settings.resolution);
+}
+
+function getPopupDimensions(aspectRatio) {
   const settings = getSettings();
-  return POPUP_SIZES[settings.popupSize] || POPUP_SIZES.medium;
+  const sizeKey = settings.popupSize || 'medium';
+
+  if ((settings.previewMode || 'fill') !== 'fit') {
+    return POPUP_SIZES['4:3'][sizeKey] || POPUP_SIZES['4:3'].medium;
+  }
+
+  const preset = getAspectPreset(
+    Number.isFinite(aspectRatio) ? aspectRatio : lastPopupAspectRatio,
+    settings
+  );
+
+  return POPUP_SIZES[preset][sizeKey] || POPUP_SIZES[preset].medium;
 }
 
 const FALLBACK_TRAY_ICON_BASE64 =
@@ -124,6 +155,29 @@ function updateLoginItem() {
   }
 }
 
+function initializeVersionState() {
+  const settings = getSettings();
+  const currentVersion = app.getVersion();
+
+  if (!settings.lastSeenVersion) {
+    setSettings({
+      lastSeenVersion: currentVersion,
+      updatedFromVersion: '',
+      justUpdated: false,
+    });
+    return;
+  }
+
+  if (settings.lastSeenVersion !== currentVersion) {
+    setSettings({
+      updatedFromVersion: settings.lastSeenVersion,
+      justUpdated: true,
+      lastSeenVersion: currentVersion,
+    });
+    log.info(`App updated from ${settings.lastSeenVersion} to ${currentVersion}`);
+  }
+}
+
 function createTray() {
   const iconPath = path.join(__dirname, 'assets', 'tray-icon.png');
   let icon = nativeImage.createFromPath(iconPath);
@@ -157,9 +211,8 @@ function updateTrayMenu() {
     { label: 'Open Fullscreen Mirror', click: () => openFullscreenMirror() },
     { type: 'separator' },
     { label: 'Settings', click: () => openSettings() },
-    { label: 'About', click: () => openAbout() },
+    { label: 'About & Updates', click: () => openAbout() },
     { type: 'separator' },
-    { label: 'Check for Updates', click: () => checkForUpdates() },
     { label: 'Open Logs Folder', click: () => openLogsFolder() },
     { type: 'separator' },
     { label: 'Exit', click: () => { isQuitting = true; app.quit(); } },
@@ -212,7 +265,9 @@ function createPopupWindow() {
 }
 
 function positionPopupNearTray(win) {
-  const { width, height } = getPopupDimensions();
+  const bounds = win.getBounds();
+  const width = bounds.width;
+  const height = bounds.height;
   
   if (!tray) {
     const bounds = screen.getPrimaryDisplay().workAreaSize;
@@ -234,6 +289,20 @@ function positionPopupNearTray(win) {
   const clampedY = Math.max(workArea.y, Math.min(y, workArea.y + workArea.height - height));
   
   win.setPosition(clampedX, clampedY);
+}
+
+function resizePopupToAspect(aspectRatio, mode) {
+  if (!popupWindow || popupWindow.isDestroyed()) return;
+
+  if (Number.isFinite(aspectRatio) && aspectRatio > 0) {
+    lastPopupAspectRatio = aspectRatio;
+  }
+
+  const { width: nextWidth, height: nextHeight } =
+    mode === 'fit' ? getPopupDimensions(aspectRatio) : getPopupDimensions(null);
+
+  popupWindow.setSize(nextWidth, nextHeight);
+  positionPopupNearTray(popupWindow);
 }
 
 function openFullscreenMirror() {
@@ -351,8 +420,18 @@ ipcMain.on('open-about', () => {
   openAbout();
 });
 
+ipcMain.on('popup-video-metadata', (event, payload = {}) => {
+  const ratio = Number(payload.aspectRatio);
+  const mode = payload.mode === 'fit' ? 'fit' : 'fill';
+  resizePopupToAspect(ratio, mode);
+});
+
 ipcMain.on('check-for-updates', () => {
   checkForUpdates();
+});
+
+ipcMain.on('download-update', () => {
+  downloadUpdate();
 });
 
 ipcMain.on('install-update', () => {
@@ -369,6 +448,27 @@ ipcMain.handle('get-app-version', () => {
 
 ipcMain.handle('get-windows-version', () => {
   return isWindows11() ? '11' : '10';
+});
+
+ipcMain.handle('get-app-env', () => {
+  return {
+    isPackaged: app.isPackaged,
+    nodeEnv: process.env.NODE_ENV || 'production',
+    hasUpdaterConfig: hasUpdateConfigFile(),
+  };
+});
+
+ipcMain.handle('get-update-status', () => {
+  const settings = getSettings();
+  return {
+    justUpdated: settings.justUpdated === true,
+    updatedFromVersion: settings.updatedFromVersion || '',
+    currentVersion: app.getVersion(),
+  };
+});
+
+ipcMain.on('acknowledge-update-banner', () => {
+  setSettings({ justUpdated: false, updatedFromVersion: '' });
 });
 
 const gotLock = app.requestSingleInstanceLock();
@@ -396,6 +496,7 @@ if (!gotLock) {
 app.whenReady().then(() => {
   applyGPUFlags();
   initLogger();
+  initializeVersionState();
   
   log.info('Windows 11:', isWindows11());
   

@@ -11,10 +11,14 @@ const DEFAULTS = {
   fps: 30,
   mirror: true,
   popupSize: 'medium',
+  previewMode: 'fill',
   alwaysOnTop: true,
   launchAtStartup: false,
   startMinimized: false,
   hotkey: 'Ctrl+Shift+M',
+  lastSeenVersion: '',
+  updatedFromVersion: '',
+  justUpdated: false,
 };
 
 const store = new Store({ defaults: DEFAULTS });

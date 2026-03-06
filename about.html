@@ -15,6 +15,10 @@
     
     <h1 class="app-name">Quick Mirror</h1>
     <p class="app-version" id="app-version">v1.0.0</p>
+    <div class="updated-banner" id="updated-banner" style="display: none;">
+      <span id="updated-banner-text">Updated successfully</span>
+      <button id="updated-banner-close" class="updated-banner-close" aria-label="Dismiss">x</button>
+    </div>
     
     <p class="app-description">
       System tray webcam mirror for Windows.<br>
@@ -32,6 +36,30 @@
     </div>
     
     <div class="divider"></div>
+    
+    <div class="update-section" id="update-section">
+      <div class="update-status" id="update-status">Checking for updates...</div>
+      <div class="update-available" id="update-available" style="display: none;">
+        <p class="update-version">New version available: <span id="new-version">v1.0.0</span></p>
+        <button class="download-btn" id="download-btn">Download</button>
+      </div>
+      <div class="update-downloading" id="update-downloading" style="display: none;">
+        <p class="download-progress-text">Downloading: <span id="progress-percent">0%</span></p>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+      <div class="update-ready" id="update-ready" style="display: none;">
+        <p class="update-ready-text">Update ready to install</p>
+        <button class="install-btn" id="install-btn">Install & Restart</button>
+      </div>
+      <div class="update-up-to-date" id="update-up-to-date" style="display: none;">
+        <p class="up-to-date-text">You're up to date!</p>
+      </div>
+      <div class="update-error" id="update-error" style="display: none;">
+        <p class="error-text" id="error-text">Update check failed</p>
+      </div>
+    </div>
     
     <button class="check-updates-btn" id="check-updates-btn">
       Check for Updates

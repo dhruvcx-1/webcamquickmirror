@@ -79,8 +79,8 @@ function createPopupWindow(config) {
 
 function createSettingsWindow() {
   return createWindow({
-    width: 500,
-    height: 600,
+    width: 393,
+    height: 650,
     frame: true,
     resizable: false,
     center: true,
@@ -94,7 +94,7 @@ function createSettingsWindow() {
 function createAboutWindow() {
   return createWindow({
     width: 360,
-    height: 320,
+    height: 500,
     frame: true,
     resizable: false,
     center: true,
