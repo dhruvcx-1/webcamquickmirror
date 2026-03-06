@@ -25,12 +25,10 @@ jobs:
         run: npm ci
 
       - name: Build Installer (no publish)
-        run: |
-          npm build:installer
+        run: npm build:installer
 
       - name: Build Portable (no publish)
-        run: |
-          npm build:portable
+        run: npm build:portable
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
