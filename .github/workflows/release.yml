@@ -26,11 +26,11 @@ jobs:
 
       - name: Build Installer (no publish)
         run: |
-          npx electron-builder --win nsis --publish never 
+          npm run build:installer
 
       - name: Build Portable (no publish)
         run: |
-          npx electron-builder --win portable --publish never 
+          npm run build:portable
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
