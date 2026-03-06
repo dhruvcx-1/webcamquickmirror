@@ -25,10 +25,12 @@ jobs:
         run: npm ci
 
       - name: Build Installer (no publish)
-        run: npx electron-builder --win nsis -c.win.artifactName="Quick Mirror Setup ${version}.${ext}" --publish never
+        run: |
+          npx electron-builder --win nsis --publish never
 
       - name: Build Portable (no publish)
-        run: npx electron-builder --win portable -c.win.artifactName="Quick Mirror ${version}.${ext}" --publish never
+        run: |
+          npx electron-builder --win portable --publish never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
