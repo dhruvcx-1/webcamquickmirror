@@ -1,6 +1,6 @@
 {
   "name": "quick-mirror",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Quick Mirror - System tray webcam mirror for Windows (Hand Mirror style)",
   "main": "main.js",
   "author": "Dhruv Chaturvedi",
@@ -81,8 +81,6 @@
       "createStartMenuShortcut": true,
       "shortcutName": "Quick Mirror",
       "runAfterFinish": false,
-      "installerIcon": "assets/icon.ico",
-      "uninstallerIcon": "assets/icon.ico",
       "license": null,
       "differentialPackage": true,
       "include": "installer.nsh"
