@@ -17,6 +17,23 @@ Runs in the tray only (no taskbar icon). Left-click for a small mirror popup; ri
 
 ---
 
+## Previews
+
+### Tray Popup
+![Tray Popup](previews/tray-preview.png)
+
+### Settings Page
+![Settings Page](previews/settings-page-1.png)
+![Settings Page](previews/settings-page-2.png)
+
+### Context Menu
+![Context Menu](previews/context-menu-preview.png)
+
+### Hotkey Setting
+![Hotkey Setting](previews/hotkey-setting-preview.png)
+
+---
+
 ## Requirements
 
 - **Windows 10 or 11**
