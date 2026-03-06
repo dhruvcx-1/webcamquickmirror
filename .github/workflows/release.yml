@@ -24,15 +24,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Installer (no publish)
-        run: |
-          npm run build:installer
-
       - name: Build Portable (no publish)
         run: |
           npm run build:portable
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Installer (no publish)
+        run: |
+          npm run build:installer
 
       - name: Create Release
         uses: softprops/action-gh-release@v2

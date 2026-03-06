@@ -12,8 +12,8 @@
   "scripts": {
     "start": "electron .",
     "build": "electron-builder",
-    "build:portable": "electron-builder --win portable -c.win.artifactName=\"Quick Mirror ${version}.${ext}\" --publish never",
-    "build:installer": "electron-builder --win nsis -c.win.artifactName=\"Quick Mirror Setup ${version}.${ext}\" --publish never"
+    "build:portable": "electron-builder --win portable -c.win.artifactName=\"Quick-Mirror-${version}.${ext}\" --publish never",
+    "build:installer": "electron-builder --win nsis -c.win.artifactName=\"Quick-Mirror-Setup-${version}.${ext}\" --publish never"
   },
   "dependencies": {
     "electron-log": "^5.1.1",
