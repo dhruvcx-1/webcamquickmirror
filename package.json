@@ -1,6 +1,6 @@
 {
   "name": "quick-mirror",
-  "version": "1.0.7.2",
+  "version": "1.0.8",
   "description": "Quick Mirror - System tray webcam mirror for Windows (Hand Mirror style)",
   "main": "main.js",
   "author": "Dhruv Chaturvedi",
