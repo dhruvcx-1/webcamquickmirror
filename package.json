@@ -12,8 +12,8 @@
   "scripts": {
     "start": "electron .",
     "build": "electron-builder",
-    "build:portable": "electron-builder --win portable",
-    "build:installer": "electron-builder --win nsis"
+    "build:portable": "electron-builder --win portable -c.win.artifactName=\"Quick Mirror ${version}.${ext}\"",
+    "build:installer": "electron-builder --win nsis -c.win.artifactName=\"Quick Mirror Setup ${version}.${ext}\""
   },
   "dependencies": {
     "electron-log": "^5.1.1",
@@ -64,16 +64,15 @@
       "target": [
         {
           "target": "nsis",
-          "arch": ["x64"],
-          "artifactName": "Quick Mirror Setup ${version}.${ext}"
+          "arch": ["x64"]
         },
         {
           "target": "portable",
-          "arch": ["x64"],
-          "artifactName": "Quick Mirror ${version}.${ext}"
+          "arch": ["x64"]
         }
       ],
-      "icon": "assets/tray-icon.png"
+      "icon": "assets/tray-icon.png",
+      "artifactName": "${productName} ${version}.${ext}"
     },
     "nsis": {
       "oneClick": false,
