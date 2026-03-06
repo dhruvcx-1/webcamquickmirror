@@ -16,6 +16,9 @@
 !macroend
 
 !macro customInstall
+  ; Create Desktop shortcut
+  CreateShortCut "$DESKTOP\Quick Mirror.lnk" "$INSTDIR\Quick Mirror.exe"
+  
   ; Create Start Menu folder with proper structure
   CreateDirectory "$SMPROGRAMS\Quick Mirror"
   CreateShortCut "$SMPROGRAMS\Quick Mirror\Quick Mirror.lnk" "$INSTDIR\Quick Mirror.exe"
@@ -37,6 +40,9 @@
 !macroend
 
 !macro customUnInstall
+  ; Remove Desktop shortcut
+  Delete "$DESKTOP\Quick Mirror.lnk"
+  
   ; Remove Start Menu folder
   Delete "$SMPROGRAMS\Quick Mirror\Quick Mirror.lnk"
   Delete "$SMPROGRAMS\Quick Mirror\Uninstall Quick Mirror.lnk"
