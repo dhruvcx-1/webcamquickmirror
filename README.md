@@ -83,8 +83,10 @@ npm run build
 
 Output in the **`dist/`** folder:
 
-- **Quick Mirror Setup 1.0.0.exe** — NSIS installer
-- **Quick Mirror 1.0.0.exe** — Portable (no install)
+- **Quick-Mirror-Setup-x.x.x.exe** — NSIS installer (**recommended**)
+- **Quick-Mirror-x.x.x.exe** — Portable (no install, **no auto-updates**)
+
+Use the installer unless you specifically need portable. The installer supports in-app updates and smoother version upgrades.
 
 Optional: add **`assets/icon.ico`** for the app icon and **`assets/tray-icon.png`** (16×16 or 32×32) for the tray icon.
 
@@ -111,8 +113,12 @@ Only one instance runs. Running `Quick Mirror.exe --fullscreen` again while the 
 **[Releases](https://github.com/dhruvcx-1/webcamquickmirror/releases)**
 
 Each release includes:
-- **Quick Mirror Setup x.x.x.exe** — Installer (recommended)
-- **Quick Mirror x.x.x.exe** — Portable, no install
+- **Quick-Mirror-Setup-x.x.x.exe** — Installer (**recommended**)
+- **Quick-Mirror-x.x.x.exe** — Portable, no install
+
+Important:
+- Portable builds do **not** support auto-updates.
+- In-app updater works only with installer-based builds.
 
 ---
 
