@@ -1,6 +1,6 @@
 {
   "name": "quick-mirror",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Quick Mirror - System tray webcam mirror for Windows (Hand Mirror style)",
   "main": "main.js",
   "author": "Dhruv Chaturvedi",
@@ -64,15 +64,16 @@
       "target": [
         {
           "target": "nsis",
-          "arch": ["x64"]
+          "arch": ["x64"],
+          "artifactName": "Quick Mirror Setup ${version}.${ext}"
         },
         {
           "target": "portable",
-          "arch": ["x64"]
+          "arch": ["x64"],
+          "artifactName": "Quick Mirror ${version}.${ext}"
         }
       ],
-      "icon": "assets/tray-icon.png",
-      "artifactName": "${productName} ${version}.${ext}"
+      "icon": "assets/tray-icon.png"
     },
     "nsis": {
       "oneClick": false,
