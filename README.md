@@ -4,8 +4,7 @@
 
 Runs in the tray only (no taskbar icon). Left-click for a small mirror popup; right-click for fullscreen, settings, or exit.
 
-### Tray Popup
-<img src="previews/tray-preview.png" width="400" />
+<img src="previews/tray-preview.png" width="400" alt="Preview" />
 
 ---
 
